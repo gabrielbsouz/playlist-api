@@ -3,6 +3,7 @@ package br.com.gabs.playlistapi.controllers;
 import br.com.gabs.playlistapi.dto.Erro;
 import br.com.gabs.playlistapi.dto.ParametroInvalido;
 import br.com.gabs.playlistapi.exceptions.ArtistaNaoEncontradoException;
+import br.com.gabs.playlistapi.exceptions.MusicaNaoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -50,6 +51,17 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ArtistaNaoEncontradoException.class)
     public final ResponseEntity<Erro> handleArtistaNaoEncontradoException(ArtistaNaoEncontradoException ex) {
+
+        Erro erro = new Erro();
+        erro.setHttpCode(404);
+        erro.setHttpMessage("Not Found");
+        erro.setDescricao(ex.getMessage());
+
+        return new ResponseEntity<>(erro, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MusicaNaoEncontradaException.class)
+    public final ResponseEntity<Erro> handleMusicaNaoEncontradaException(MusicaNaoEncontradaException ex) {
 
         Erro erro = new Erro();
         erro.setHttpCode(404);

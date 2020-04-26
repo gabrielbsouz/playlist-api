@@ -6,10 +6,7 @@ import br.com.gabs.playlistapi.mappers.ArtistaMapper;
 import br.com.gabs.playlistapi.services.ArtistaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -45,5 +42,15 @@ public class ArtistaController {
         Artista artista = mapper.artistaModelToArtistaDTO(model);
 
         return new ResponseEntity<>(artista, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/v1/artistas/{nome}")
+    public List<Artista> pesquisarArtistas(@PathVariable String nome){
+
+        List<br.com.gabs.playlistapi.models.Artista> modelList = service.pesquisarArtistas(nome);
+
+        List<Artista> artistas = mapper.artistaModelListToArtistaListDTO(modelList);
+
+        return artistas;
     }
 }

@@ -3,10 +3,7 @@ package br.com.gabs.playlistapi.models;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -19,6 +16,7 @@ public class RedeSocial {
     private String codigo;
 
     @Column(name = "EN_TIPO_REDE_SOCIAL")
+    @Enumerated(EnumType.STRING)
     private TipoRedeSocial tipo;
 
     @Column(name = "NM_REDE_SOCIAL")

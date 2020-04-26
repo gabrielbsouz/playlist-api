@@ -5,9 +5,11 @@ import br.com.gabs.playlistapi.models.Artista;
 import br.com.gabs.playlistapi.repositories.ArtistaRepository;
 import br.com.gabs.playlistapi.services.ArtistaService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ArtistaServiceImpl implements ArtistaService {
 
     private final ArtistaRepository repository;

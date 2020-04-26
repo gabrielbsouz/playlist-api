@@ -2,6 +2,7 @@ package br.com.gabs.playlistapi.controllers;
 
 import br.com.gabs.playlistapi.dto.Artista;
 import br.com.gabs.playlistapi.forms.ArtistaPostRequest;
+import br.com.gabs.playlistapi.forms.ArtistaPutRequest;
 import br.com.gabs.playlistapi.mappers.ArtistaMapper;
 import br.com.gabs.playlistapi.services.ArtistaService;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class ArtistaController {
@@ -52,5 +54,17 @@ public class ArtistaController {
         List<Artista> artistas = mapper.artistaModelListToArtistaListDTO(modelList);
 
         return artistas;
+    }
+
+    @PutMapping("/v1/artistas/{codigo}")
+    public Artista atualizarArtista(@PathVariable UUID codigo, @Valid @RequestBody ArtistaPutRequest request){
+
+        br.com.gabs.playlistapi.models.Artista model = mapper.artistaPutToArtistaModel(request);
+
+        service.atualizarArtista(codigo.toString(), model);
+
+        Artista artista = mapper.artistaModelToArtistaDTO(model);
+
+        return artista;
     }
 }

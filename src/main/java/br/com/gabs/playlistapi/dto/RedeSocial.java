@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 @Data
 public class RedeSocial {
 
-    @NotNull @NotEmpty
     private String codigo;
     @Valid
     private TipoRedeSocial tipo;

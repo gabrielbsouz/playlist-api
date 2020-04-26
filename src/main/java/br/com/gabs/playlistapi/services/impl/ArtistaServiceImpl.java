@@ -33,7 +33,7 @@ public class ArtistaServiceImpl implements ArtistaService {
     @Override
     public List<Artista> pesquisarArtistas(String nome) {
 
-        if (repository.existsById(nome)){
+        if (!repository.existsById(nome)){
 
             throw new ArtistaNaoEncontradoException("Artista: " + nome + "não foi encontrado!");
         }
@@ -54,7 +54,7 @@ public class ArtistaServiceImpl implements ArtistaService {
     @Override
     public void excluirArtista(String codigo) {
 
-        if (repository.existsById(codigo)){
+        if (!repository.existsById(codigo)){
 
             throw new ArtistaNaoEncontradoException("Artista com código: " + codigo + "não foi encontrado!");
         }

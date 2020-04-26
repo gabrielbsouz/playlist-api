@@ -67,4 +67,12 @@ public class ArtistaController {
 
         return artista;
     }
+
+    @DeleteMapping("/v1/artistas/{codigo}")
+    public ResponseEntity<Void> excluirArtista(@PathVariable UUID codigo){
+
+        service.excluirArtista(codigo.toString());
+
+        return ResponseEntity.noContent().build();
+    }
 }

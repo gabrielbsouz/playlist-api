@@ -1,11 +1,17 @@
 package br.com.gabs.playlistapi.controllers;
 
 import br.com.gabs.playlistapi.dto.Artista;
+import br.com.gabs.playlistapi.forms.ArtistaPostRequest;
 import br.com.gabs.playlistapi.mappers.ArtistaMapper;
 import br.com.gabs.playlistapi.services.ArtistaService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,12 +26,24 @@ public class ArtistaController {
     }
 
     @GetMapping("/v1/artistas")
-    public List<Artista> listarCantores(){
+    public List<Artista> listarArtistas(){
 
         List<br.com.gabs.playlistapi.models.Artista> modelList = service.listarArtistas();
 
         List<Artista> artistas = mapper.artistaModelListToArtistaListDTO(modelList);
 
         return artistas;
+    }
+
+    @PostMapping("/v1/artistas")
+    public ResponseEntity<Artista> cadastrarArtista(@Valid @RequestBody ArtistaPostRequest request){
+
+        br.com.gabs.playlistapi.models.Artista model = mapper.artistaPostToArtistaModel(request);
+
+        service.cadastrarArtista(model);
+
+        Artista artista = mapper.artistaModelToArtistaDTO(model);
+
+        return new ResponseEntity<>(artista, HttpStatus.CREATED);
     }
 }
